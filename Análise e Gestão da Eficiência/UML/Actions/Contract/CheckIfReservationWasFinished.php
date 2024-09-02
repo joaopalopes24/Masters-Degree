@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Actions;
+namespace App\Actions\Contract;
 
 use App\Contracts\Execute;
 use App\Enums\StatusEnum;

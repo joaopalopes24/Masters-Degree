@@ -2,14 +2,16 @@
 
 namespace App;
 
-use App\Actions\CancelReservation;
-use App\Actions\CheckIfReservationWasFinished;
-use App\Actions\ConfirmReservation;
+use App\Actions\Abstract;
+use App\Actions\Contract;
 use Illuminate\Support\Carbon;
 
 class Example
 {
-    public function __invoke(): void
+    /**
+     * Test using Abstract.
+     */
+    public function test1(): void
     {
         $checkin = Carbon::createFromFormat('Y-m-d', '2025-01-01');
         $checkout = Carbon::createFromFormat('Y-m-d', '2025-01-05');
@@ -18,15 +20,40 @@ class Example
 
         $reservation->save();
 
-        (new ConfirmReservation($reservation))->handle();
+        Abstract\ConfirmReservation::execute($reservation);
 
         dump($reservation->getStatus());
 
-        (new CancelReservation($reservation))->handle();
+        Abstract\CancelReservation::execute($reservation);
 
         dump($reservation->getStatus());
 
-        $check = (new CheckIfReservationWasFinished($reservation))->handle();
+        $check = Abstract\CheckIfReservationWasFinished::execute($reservation);
+
+        dd($check);
+    }
+
+    /**
+     * Test using Contract.
+     */
+    public function test2(): void
+    {
+        $checkin = Carbon::createFromFormat('Y-m-d', '2025-01-01');
+        $checkout = Carbon::createFromFormat('Y-m-d', '2025-01-05');
+
+        $reservation = new Reservation(649.99, $checkin, $checkout);
+
+        $reservation->save();
+
+        (new Contract\ConfirmReservation($reservation))->handle();
+
+        dump($reservation->getStatus());
+
+        (new Contract\CancelReservation($reservation))->handle();
+
+        dump($reservation->getStatus());
+
+        $check = (new Contract\CheckIfReservationWasFinished($reservation))->handle();
 
         dd($check);
     }

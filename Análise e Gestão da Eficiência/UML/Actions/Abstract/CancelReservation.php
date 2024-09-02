@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Actions;
+namespace App\Actions\Abstract;
 
-use App\Contracts\Execute;
+use App\Abstracts\Action;
 use App\Enums\StatusEnum;
 use App\Reservation;
 
-class CancelReservation implements Execute
+class CancelReservation extends Action
 {
     /**
      * Create a new Reservation instance.
@@ -18,7 +18,7 @@ class CancelReservation implements Execute
     /**
      * Execute the action.
      */
-    public function handle(): void
+    protected function handle(): void
     {
         $this->reservation->setStatus(StatusEnum::CANCELED);
 
