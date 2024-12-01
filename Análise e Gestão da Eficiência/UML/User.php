@@ -10,7 +10,7 @@ class User
     /**
      * The name of the user.
      */
-    public string $name;
+    private string $name;
 
     /**
      * The password of the user.
