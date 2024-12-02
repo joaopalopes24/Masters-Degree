@@ -7,16 +7,16 @@ from scipy.signal import cheby1
 from scipy.signal import cheby2
 
 # FFT do sinal de entrada e saída
-def plot_fft(sinal, Fs, title):
+def plot_fft(number, sinal, Fs, title):
     N = len(sinal)
     f = np.fft.fftfreq(N, 1/Fs)
     F_sinal = np.fft.fft(sinal)
-    plt.figure()
+    plt.subplot(4, 1, number)
     plt.plot(f[:N//2], np.abs(F_sinal)[:N//2])
     plt.title(title)
     plt.xlabel('Frequência (Hz)')
     plt.ylabel('Magnitude')
-    plt.grid()
+    plt.legend()
 
 # Lendo o arquivo de som
 som, Fs = sf.read('/home/joaopalopes/Development/Masters-Degree/Processamento de Sinais/Projeto Filtros/audio.wav') # Sampling frequency and audio data
@@ -70,12 +70,14 @@ sinal_filtrado_cheby1 = np.convolve(sinal_entrada, H_cheby1, mode='same')
 sinal_filtrado_cheby2 = np.convolve(sinal_entrada, H_cheby2, mode='same')
 
 # Plotando os espectros de frequência
-plot_fft(sinal_entrada, Fs, 'Espectro de Frequência - Entrada')
+plt.figure()
+plot_fft(1, sinal_entrada, Fs, 'Espectro de Frequência - Entrada')
 
-plot_fft(sinal_filtrado_butter, Fs, 'Espectro de Frequência - Saída (Butterworth)')
-plot_fft(sinal_filtrado_cheby1, Fs, 'Espectro de Frequência - Saída (Chebyshev I)')
-plot_fft(sinal_filtrado_cheby2, Fs, 'Espectro de Frequência - Saída (Chebyshev II)')
+plot_fft(2, sinal_filtrado_butter, Fs, 'Espectro de Frequência - Saída (Butterworth)')
+plot_fft(3, sinal_filtrado_cheby1, Fs, 'Espectro de Frequência - Saída (Chebyshev I)')
+plot_fft(4, sinal_filtrado_cheby2, Fs, 'Espectro de Frequência - Saída (Chebyshev II)')
 
+plt.tight_layout()
 plt.show()
 
 # Passa-altas
@@ -125,10 +127,12 @@ sinal_filtrado_cheby1 = np.convolve(sinal_entrada, H_cheby1, mode='same')
 sinal_filtrado_cheby2 = np.convolve(sinal_entrada, H_cheby2, mode='same')
 
 # Plotando os espectros de frequência
-plot_fft(sinal_entrada, Fs, 'Espectro de Frequência - Entrada')
+plt.figure()
+plot_fft(1, sinal_entrada, Fs, 'Espectro de Frequência - Entrada')
 
-plot_fft(sinal_filtrado_butter, Fs, 'Espectro de Frequência - Saída (Butterworth)')
-plot_fft(sinal_filtrado_cheby1, Fs, 'Espectro de Frequência - Saída (Chebyshev I)')
-plot_fft(sinal_filtrado_cheby2, Fs, 'Espectro de Frequência - Saída (Chebyshev II)')
+plot_fft(2, sinal_filtrado_butter, Fs, 'Espectro de Frequência - Saída (Butterworth)')
+plot_fft(3, sinal_filtrado_cheby1, Fs, 'Espectro de Frequência - Saída (Chebyshev I)')
+plot_fft(4, sinal_filtrado_cheby2, Fs, 'Espectro de Frequência - Saída (Chebyshev II)')
 
+plt.tight_layout()
 plt.show()

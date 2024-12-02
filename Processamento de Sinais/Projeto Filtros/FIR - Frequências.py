@@ -6,16 +6,16 @@ from scipy.signal import firwin
 from scipy.signal.windows import get_window
 
 # FFT do sinal de entrada e saída
-def plot_fft(sinal, Fs, title):
+def plot_fft(number, sinal, Fs, title):
     N = len(sinal)
     f = np.fft.fftfreq(N, 1/Fs)
     F_sinal = np.fft.fft(sinal)
-    plt.figure()
+    plt.subplot(4, 1, number)
     plt.plot(f[:N//2], np.abs(F_sinal)[:N//2])
     plt.title(title)
     plt.xlabel('Frequência (Hz)')
     plt.ylabel('Magnitude')
-    plt.grid()
+    plt.legend()
 
 # Função para calcular o filtro FIR com uma janela especificada
 def fir_filter(wc, M, window_type):
@@ -117,10 +117,12 @@ sinal_filtrado_blackman = np.convolve(sinal_entrada, h_blackman, mode='same')
 sinal_filtrado_rectangular = np.convolve(sinal_entrada, h_rectangular, mode='same')
 
 # Plotando os espectros de frequência
-plot_fft(sinal_entrada, Fs, 'Espectro de Frequência - Entrada')
+plt.figure()
+plot_fft(1, sinal_entrada, Fs, 'Espectro de Frequência - Entrada')
 
-plot_fft(sinal_filtrado_hamming, Fs, 'Espectro de Frequência - Saída (Hamming)')
-plot_fft(sinal_filtrado_blackman, Fs, 'Espectro de Frequência - Saída (Blackman)')
-plot_fft(sinal_filtrado_rectangular, Fs, 'Espectro de Frequência - Saída (Rectangular)')
+plot_fft(2, sinal_filtrado_hamming, Fs, 'Espectro de Frequência - Saída (Hamming)')
+plot_fft(3, sinal_filtrado_blackman, Fs, 'Espectro de Frequência - Saída (Blackman)')
+plot_fft(4, sinal_filtrado_rectangular, Fs, 'Espectro de Frequência - Saída (Rectangular)')
 
+plt.tight_layout()
 plt.show()
