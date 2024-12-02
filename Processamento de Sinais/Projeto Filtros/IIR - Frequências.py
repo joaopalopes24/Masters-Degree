@@ -22,14 +22,15 @@ def plot_fft(number, sinal, Fs, title):
 som, Fs = sf.read('/home/joaopalopes/Development/Masters-Degree/Processamento de Sinais/Projeto Filtros/audio.wav') # Sampling frequency and audio data
 
 # Parâmetros do filtro
-wc = 0.1  # Frequência de corte normalizada
+Fc = 2000 # Frequência de corte (Hz)
+wc = Fc / (Fs / 2)  # Frequência de corte normalizada
 
 # Passa-baixas
 
 # Projeto dos filtros IIR (Butterworth, Chebyshev 1 e Chebyshev 2)
-b_butter, a_butter = butter(11, wc, btype='low', analog=False, output='ba', fs=Fs)
-b_cheby1, a_cheby1 = cheby1(4, 0.5, wc, btype='low', analog=False, output='ba', fs=Fs)
-b_cheby2, a_cheby2 = cheby2(4, 0.5, wc, btype='low', analog=False, output='ba', fs=Fs)
+b_butter, a_butter = butter(11, wc, btype='low', analog=False)
+b_cheby1, a_cheby1 = cheby1(4, 0.5, wc, btype='low', analog=False)
+b_cheby2, a_cheby2 = cheby2(4, 0.5, wc, btype='low', analog=False)
 
 # Resposta em frequência
 w, H_butter = signal.freqz(b_butter, a_butter, worN=8000)
@@ -83,9 +84,9 @@ plt.show()
 # Passa-altas
 
 # Projeto dos filtros IIR (Butterworth, Chebyshev 1 e Chebyshev 2)
-b_butter, a_butter = butter(11, wc, btype='high', analog=False, output='ba', fs=Fs)
-b_cheby1, a_cheby1 = cheby1(4, 0.5, wc, btype='high', analog=False, output='ba', fs=Fs)
-b_cheby2, a_cheby2 = cheby2(4, 0.5, wc, btype='high', analog=False, output='ba', fs=Fs)
+b_butter, a_butter = butter(11, wc, btype='high', analog=False)
+b_cheby1, a_cheby1 = cheby1(4, 0.5, wc, btype='high', analog=False)
+b_cheby2, a_cheby2 = cheby2(4, 0.5, wc, btype='high', analog=False)
 
 # Resposta em frequência
 w, H_butter = signal.freqz(b_butter, a_butter, worN=8000)
