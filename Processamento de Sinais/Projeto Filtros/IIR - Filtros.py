@@ -40,7 +40,7 @@ wc = Fc / (Fs / 2)  # Frequência de corte normalizada
 # Projeto dos filtros IIR (Butterworth, Chebyshev 1 e Chebyshev 2)
 b_butter, a_butter = butter(11, wc, btype='low', analog=False)
 b_cheby1, a_cheby1 = cheby1(4, 0.5, wc, btype='low', analog=False)
-b_cheby2, a_cheby2 = cheby2(4, 0.5, wc, btype='low', analog=False)
+b_cheby2, a_cheby2 = cheby2(8, 20, wc, btype='low', analog=False)
 
 # Filtra os sinais
 y1_butter = lfilter(b_butter, a_butter, left)
